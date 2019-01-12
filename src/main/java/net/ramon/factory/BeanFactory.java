@@ -6,6 +6,7 @@
 package net.ramon.factory;
 
 import com.google.gson.Gson;
+import net.ramon.bean.AnuncioBean;
 import net.ramon.bean.BarrioBean;
 import net.ramon.bean.CiudadBean;
 import net.ramon.bean.ExtrasBean;
@@ -49,6 +50,9 @@ public class BeanFactory {
             case "fotos":
                 oBean = new FotosBean();
                 break;
+            case "anuncio":
+                oBean = new AnuncioBean();
+                break;
 //            case "tipoproducto":
 //                oBean = new TipoproductoBean();
 //                break;
@@ -91,6 +95,9 @@ public class BeanFactory {
                 break;
             case "barrio":
                 oBean = oGson.fromJson(strJsonFromClient, BarrioBean.class);
+                break;
+            case "anuncio":
+                oBean = oGson.fromJson(strJsonFromClient, AnuncioBean.class);
                 break;
 //            case "tipoproducto":
 //                oBean = oGson.fromJson(strJsonFromClient, TipoproductoBean.class);

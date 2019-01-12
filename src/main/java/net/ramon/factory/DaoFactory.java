@@ -6,6 +6,7 @@
 package net.ramon.factory;
 
 import java.sql.Connection;
+import net.ramon.dao.AnuncioDao;
 import net.ramon.dao.BarrioDao;
 import net.ramon.dao.CiudadDao;
 import net.ramon.dao.ExtrasDao;
@@ -48,6 +49,9 @@ public class DaoFactory {
                 break;
             case "fotos":
                 oDao = new FotosDao(oConnection, ob);
+                break;
+            case "anuncio":
+                oDao = new AnuncioDao(oConnection, ob);
                 break;
 //            case "tipoproducto":
 //                oDao = new TipoproductoDao(oConnection, ob);

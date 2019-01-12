@@ -251,14 +251,20 @@ public class AnuncioBean extends GenericBeanImplementation implements BeanInterf
     public String getColumns() {
         String strColumns = "";
         strColumns += "id,";
-        strColumns += "nickname,";
-        strColumns += "nombre,";
-        strColumns += "apellido1,";
-        strColumns += "apellido2,";
-        strColumns += "correo,";
-        strColumns += "telefono,";
-        strColumns += "password,";
-        strColumns += "id_tipousuario";
+        strColumns += "titulo,";
+        strColumns += "habitaciones,";
+        strColumns += "banyos,";
+        strColumns += "metroscasa,";
+        strColumns += "metrosterreno,";
+        strColumns += "direccion,";
+        strColumns += "fechacreacion,";
+        strColumns += "fechaupdate,";
+        strColumns += "precio,";
+        strColumns += "descripcion,";
+        strColumns += "id_usuario,";
+        strColumns += "id_tipoinmueble,";
+        strColumns += "id_tipovia,";
+        strColumns += "id_barrio";
         return strColumns;
     }
 
@@ -281,12 +287,12 @@ public class AnuncioBean extends GenericBeanImplementation implements BeanInterf
         ZoneId defaultZoneId = ZoneId.systemDefault();
 
         //Converting the date to Instant
-        Instant instant = fechacreacion.toInstant();
-        Instant instant2 = fechaupdate.toInstant();
+        Instant instantCreacion = fechacreacion.toInstant();
+        Instant instantUpdate = fechaupdate.toInstant();
 
         //Converting the Date to LocalDate
-        LocalDateTime localDateTime = instant.atZone(defaultZoneId).toLocalDateTime();
-        LocalDateTime updateDateTime = instant2.atZone(defaultZoneId).toLocalDateTime();
+        LocalDateTime localDateTimeCreacion = instantCreacion.atZone(defaultZoneId).toLocalDateTime();
+        LocalDateTime localDateTimeUpdate = instantUpdate.atZone(defaultZoneId).toLocalDateTime();
 
         String strColumns = "";
         strColumns += "null,";
@@ -296,8 +302,14 @@ public class AnuncioBean extends GenericBeanImplementation implements BeanInterf
         strColumns += metroscasa + ",";
         strColumns += metrosterreno + ",";
         strColumns += EncodingHelper.quotate(direccion) + ",";
-        strColumns += EncodingHelper.quotate(localDateTime.toString()) + ",";
-        strColumns += id_tipoUsuario;
+        strColumns += EncodingHelper.quotate(localDateTimeCreacion.toString()) + ",";
+        strColumns += EncodingHelper.quotate(localDateTimeUpdate.toString()) + ",";
+        strColumns += precio + ",";
+        strColumns += EncodingHelper.quotate(descripcion) + ",";
+        strColumns += id_Usuario + ",";
+        strColumns += id_Tipoinmueble + ",";
+        strColumns += id_Tipovia + ",";
+        strColumns += id_Barrio;
         return strColumns;
     }
 
@@ -315,17 +327,34 @@ public class AnuncioBean extends GenericBeanImplementation implements BeanInterf
         if (id_Tipovia == 0) {
             id_Tipovia = obj_Tipovia.getId();
         }
+        
+                //Getting the default zone id
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+
+        //Converting the date to Instant
+        Instant instantCreacion = fechacreacion.toInstant();
+        Instant instantUpdate = fechaupdate.toInstant();
+
+        //Converting the Date to LocalDate
+        LocalDateTime localDateTimeCreacion = instantCreacion.atZone(defaultZoneId).toLocalDateTime();
+        LocalDateTime localDateTimeUpdate = instantUpdate.atZone(defaultZoneId).toLocalDateTime();
 
         String strPairs = "";
         strPairs += "id=" + id + ",";
-        strPairs += "nickname=" + EncodingHelper.quotate(nickname) + ",";
-        strPairs += "nombre=" + EncodingHelper.quotate(nombre) + ",";
-        strPairs += "apellido1=" + EncodingHelper.quotate(ape1) + ",";
-        strPairs += "apellido2=" + EncodingHelper.quotate(ape2) + ",";
-        strPairs += "correo=" + EncodingHelper.quotate(correo) + ",";
-        strPairs += "telefono=" + telefono + ",";
-        strPairs += "password=" + EncodingHelper.quotate(pass) + ",";
-        strPairs += "id_tipousuario=" + id_tipoUsuario;
+        strPairs += "titulo=" + EncodingHelper.quotate(titulo) + ",";
+        strPairs += "habitaciones=" + habitaciones + ",";
+        strPairs += "banyos=" + banyos + ",";
+        strPairs += "metroscasa=" + metroscasa + ",";
+        strPairs += "metrosterreno=" + metrosterreno + ",";
+        strPairs += "direccion=" + EncodingHelper.quotate(direccion) + ",";
+        strPairs += "fechacreacion=" + EncodingHelper.quotate(localDateTimeCreacion.toString()) + ",";
+        strPairs += "fechaupdate=" + EncodingHelper.quotate(localDateTimeUpdate.toString()) + ",";
+        strPairs += "precio=" + precio + ",";
+        strPairs += "descripcion=" + EncodingHelper.quotate(descripcion) + ",";
+        strPairs += "id_usuario=" + id_Usuario;
+        strPairs += "id_tipoinmueble=" + id_Tipoinmueble;
+        strPairs += "id_tipovia=" + id_Tipovia;
+        strPairs += "id_barrio=" + id_Barrio;
         strPairs += " WHERE id=" + id;
         return strPairs;
 
