@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import net.ramon.bean.ExtrasAnuncioBean;
-import net.ramon.bean.publicBeanInterface.BeanInterface;
 import net.ramon.dao.genericDaoImplementation.GenericDaoImplementation;
 import net.ramon.dao.publicDaoInterface.DaoInterface;
 
@@ -29,7 +28,7 @@ public class ExtrasAnuncioDao extends GenericDaoImplementation implements DaoInt
         try {
             oPreparedStatement = oConnection.prepareStatement(strSQL);
             oPreparedStatement.executeUpdate();
-            oResultSet = oPreparedStatement.getGeneratedKeys();
+//            oResultSet = oPreparedStatement.getGeneratedKeys();
 //            if (oResultSet.next()) {
 //                oBean.setId(oResultSet.getInt(1));
 //            } else {
