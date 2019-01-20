@@ -371,6 +371,17 @@ public class ServiceFactory {
                                     break;
                             }
                             break;
+                        case "extras":
+                            ExtrasService oExtrasService = new ExtrasService(oRequest);
+                            switch (op) {
+                                case "getall":
+                                    oReplyBean = oExtrasService.getall();
+                                    break;
+                                default:
+                                    oReplyBean = new ReplyBean(500, "Operation doesn't exist");
+                                    break;
+                            }
+                            break;
                         default:
                             oReplyBean = new ReplyBean(500, "Object doesn't exist");
                             break;
