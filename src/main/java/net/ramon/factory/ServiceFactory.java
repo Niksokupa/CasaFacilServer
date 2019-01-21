@@ -149,6 +149,9 @@ public class ServiceFactory {
                                 case "get":
                                     oReplyBean = oExtrasService.get();
                                     break;
+                                case "getall":
+                                    oReplyBean = oExtrasService.getall();
+                                    break;
                                 case "create":
                                     oReplyBean = oExtrasService.create();
                                     break;
@@ -376,6 +379,23 @@ public class ServiceFactory {
                             switch (op) {
                                 case "getall":
                                     oReplyBean = oExtrasService.getall();
+                                    break;
+                                default:
+                                    oReplyBean = new ReplyBean(500, "Operation doesn't exist");
+                                    break;
+                            }
+                            break;
+                        case "anuncio":
+                            AnuncioService oAnuncioService = new AnuncioService(oRequest);
+                            switch (op) {
+                                case "get":
+                                    oReplyBean = oAnuncioService.get();
+                                    break;
+                                case "getcount":
+                                    oReplyBean = oAnuncioService.getcount();
+                                    break;
+                                case "getpage":
+                                    oReplyBean = oAnuncioService.getpage();
                                     break;
                                 default:
                                     oReplyBean = new ReplyBean(500, "Operation doesn't exist");
