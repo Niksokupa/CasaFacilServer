@@ -10,6 +10,7 @@ import net.ramon.dao.AnuncioDao;
 import net.ramon.dao.BarrioDao;
 import net.ramon.dao.CiudadDao;
 import net.ramon.dao.ExtrasDao;
+import net.ramon.dao.FavoritoDao;
 import net.ramon.dao.FotosDao;
 import net.ramon.dao.TipoinmuebleDao;
 import net.ramon.dao.TipousuarioDao;
@@ -52,6 +53,9 @@ public class DaoFactory {
                 break;
             case "anuncio":
                 oDao = new AnuncioDao(oConnection, ob);
+                break;
+            case "favorito":
+                oDao = new FavoritoDao(oConnection, ob);
                 break;
 //            case "tipoproducto":
 //                oDao = new TipoproductoDao(oConnection, ob);

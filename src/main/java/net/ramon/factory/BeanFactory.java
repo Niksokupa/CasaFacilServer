@@ -10,6 +10,7 @@ import net.ramon.bean.AnuncioBean;
 import net.ramon.bean.BarrioBean;
 import net.ramon.bean.CiudadBean;
 import net.ramon.bean.ExtrasBean;
+import net.ramon.bean.FavoritoBean;
 import net.ramon.bean.FotosBean;
 import net.ramon.bean.TipoinmuebleBean;
 import net.ramon.bean.TipousuarioBean;
@@ -52,6 +53,9 @@ public class BeanFactory {
                 break;
             case "anuncio":
                 oBean = new AnuncioBean();
+                break;
+            case "favorito":
+                oBean = new FavoritoBean();
                 break;
 //            case "tipoproducto":
 //                oBean = new TipoproductoBean();
@@ -98,6 +102,9 @@ public class BeanFactory {
                 break;
             case "anuncio":
                 oBean = oGson.fromJson(strJsonFromClient, AnuncioBean.class);
+                break;
+            case "favorito":
+                oBean = oGson.fromJson(strJsonFromClient, FavoritoBean.class);
                 break;
 //            case "tipoproducto":
 //                oBean = oGson.fromJson(strJsonFromClient, TipoproductoBean.class);

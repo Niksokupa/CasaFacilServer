@@ -8,6 +8,7 @@ import net.ramon.service.AnuncioService;
 import net.ramon.service.BarrioService;
 import net.ramon.service.CiudadService;
 import net.ramon.service.ExtrasService;
+import net.ramon.service.FavoritoService;
 import net.ramon.service.FotosService;
 import net.ramon.service.TipoinmuebleService;
 import net.ramon.service.TipousuarioService;
@@ -330,6 +331,32 @@ public class ServiceFactory {
                                     break;
                             }
                             break;
+                        case "favorito":
+                            FavoritoService oFavoritoService = new FavoritoService(oRequest);
+                            switch (op) {
+                                case "get":
+                                    oReplyBean = oFavoritoService.get();
+                                    break;
+                                case "create":
+                                    oReplyBean = oFavoritoService.create();
+                                    break;
+                                case "update":
+                                    oReplyBean = oFavoritoService.update();
+                                    break;
+                                case "remove":
+                                    oReplyBean = oFavoritoService.remove();
+                                    break;
+                                case "getcount":
+                                    oReplyBean = oFavoritoService.getcount();
+                                    break;
+                                case "getpage":
+                                    oReplyBean = oFavoritoService.getpage();
+                                    break;
+                                default:
+                                    oReplyBean = new ReplyBean(500, "Operation doesn't exist");
+                                    break;
+                            }
+                            break;
                         case "anuncio":
                             AnuncioService oAnuncioService = new AnuncioService(oRequest);
                             switch (op) {
@@ -347,6 +374,20 @@ public class ServiceFactory {
                                     break;
                                 case "getcount":
                                     oReplyBean = oAnuncioService.getcount();
+                                    break;
+                                case "getpage":
+                                    oReplyBean = oAnuncioService.getpage();
+                                    break;
+                                default:
+                                    oReplyBean = new ReplyBean(500, "Operation doesn't exist");
+                                    break;
+                            }
+                            break;
+                        case "extras":
+                            ExtrasService oExtrasService = new ExtrasService(oRequest);
+                            switch (op) {
+                                case "getall":
+                                    oReplyBean = oExtrasService.getall();
                                     break;
                                 default:
                                     oReplyBean = new ReplyBean(500, "Operation doesn't exist");
