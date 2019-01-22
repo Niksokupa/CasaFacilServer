@@ -272,6 +272,9 @@ public class ServiceFactory {
                                 case "get":
                                     oReplyBean = oBarrioService.get();
                                     break;
+                                case "getall":
+                                    oReplyBean = oBarrioService.getall();
+                                    break;
                                 case "create":
                                     oReplyBean = oBarrioService.create();
                                     break;
@@ -394,6 +397,17 @@ public class ServiceFactory {
                                     break;
                             }
                             break;
+                        case "barrio":
+                            BarrioService oBarrioService = new BarrioService(oRequest);
+                            switch (op) {
+                                case "getall":
+                                    oReplyBean = oBarrioService.getall();
+                                    break;
+                                default:
+                                    oReplyBean = new ReplyBean(500, "Operation doesn't exist");
+                                    break;
+                            }
+                            break;
                         default:
                             oReplyBean = new ReplyBean(500, "Object doesn't exist");
                             break;
@@ -409,6 +423,17 @@ public class ServiceFactory {
                                     break;
                                 case "check":
                                     oReplyBean = oUsuarioService.check();
+                                    break;
+                                default:
+                                    oReplyBean = new ReplyBean(500, "Operation doesn't exist");
+                                    break;
+                            }
+                            break;
+                        case "barrio":
+                            BarrioService oBarrioService = new BarrioService(oRequest);
+                            switch (op) {
+                                case "getall":
+                                    oReplyBean = oBarrioService.getall();
                                     break;
                                 default:
                                     oReplyBean = new ReplyBean(500, "Operation doesn't exist");
