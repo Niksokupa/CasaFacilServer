@@ -23,11 +23,14 @@ public class AnuncioDao extends GenericDaoImplementation implements DaoInterface
         super(oConnection, ob);
     }
 
-    public ArrayList<BeanInterface> getpagefiltered(int iRpp, int iPage, HashMap<String, String> hmOrder, int ciudad, Integer expand) throws Exception {
+    public ArrayList<BeanInterface> getpagefiltered(int iRpp, int iPage, HashMap<String, String> hmOrder, int ciudad, Integer barrio, Integer expand) throws Exception {
         String strSQL = "SELECT * FROM " + ob + ",barrio ";
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<BeanInterface> alBean;
-        strSQL += " WHERE barrio.id_ciudad = " + ciudad + " AND " + ob + ".id_barrio=barrio.id";
+        strSQL += " WHERE barrio.id_ciudad = " + ciudad + " AND " + ob + ".id_barrio = barrio.id";
+        if (barrio != null) {
+            strSQL += " AND barrio.id = " + barrio;
+        }
         if (iRpp > 0 && iRpp < 100000 && iPage > 0 && iPage < 100000000) {
             strSQL += " LIMIT " + (iPage - 1) * iRpp + ", " + iRpp;
             ResultSet oResultSet = null;

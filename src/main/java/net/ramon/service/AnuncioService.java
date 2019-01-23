@@ -98,11 +98,15 @@ public class AnuncioService extends GenericServiceImplementation implements Serv
             Integer iRpp = Integer.parseInt(oRequest.getParameter("rpp"));
             Integer iPage = Integer.parseInt(oRequest.getParameter("page"));
             Integer ciudad = Integer.parseInt(oRequest.getParameter("ciudad"));
+            Integer barrio = null;
+            if(oRequest.getParameter("barrio") != null){
+                barrio = Integer.parseInt(oRequest.getParameter("barrio"));
+            }
             HashMap<String, String> hmOrder = ParameterCook.getOrderParams(oRequest.getParameter("order"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
             AnuncioDao anuncioDao = new AnuncioDao(oConnection, "anuncio");
-            ArrayList<BeanInterface> alBean = anuncioDao.getpagefiltered(iRpp, iPage, hmOrder, ciudad, 1);
+            ArrayList<BeanInterface> alBean = anuncioDao.getpagefiltered(iRpp, iPage, hmOrder, ciudad, barrio, 1);
             Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
             oReplyBean = new ReplyBean(200, oGson.toJson(alBean));
         } catch (Exception ex) {
