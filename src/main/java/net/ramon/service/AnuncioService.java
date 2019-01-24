@@ -99,14 +99,19 @@ public class AnuncioService extends GenericServiceImplementation implements Serv
             Integer iPage = Integer.parseInt(oRequest.getParameter("page"));
             Integer ciudad = Integer.parseInt(oRequest.getParameter("ciudad"));
             Integer barrio = null;
-            if(oRequest.getParameter("barrio") != null){
+            String extras = null;
+            String prueba = oRequest.getParameter("barrio");
+            if(oRequest.getParameter("barrio") != null && !prueba.equals("undefined")){
                 barrio = Integer.parseInt(oRequest.getParameter("barrio"));
+            }
+            if(oRequest.getParameter("extras") != null && !"undefined".equals(oRequest.getParameter("extras")) && !"".equals(oRequest.getParameter("extras"))){
+                extras = oRequest.getParameter("extras");
             }
             HashMap<String, String> hmOrder = ParameterCook.getOrderParams(oRequest.getParameter("order"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
             AnuncioDao anuncioDao = new AnuncioDao(oConnection, "anuncio");
-            ArrayList<BeanInterface> alBean = anuncioDao.getpagefiltered(iRpp, iPage, hmOrder, ciudad, barrio, 1);
+            ArrayList<BeanInterface> alBean = anuncioDao.getpagefiltered(iRpp, iPage, hmOrder, ciudad, barrio, extras, 1);
             Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
             oReplyBean = new ReplyBean(200, oGson.toJson(alBean));
         } catch (Exception ex) {
