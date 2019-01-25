@@ -24,15 +24,25 @@ public class AnuncioDao extends GenericDaoImplementation implements DaoInterface
     }
 
     public ArrayList<BeanInterface> getpagefiltered(int iRpp, int iPage, HashMap<String, String> hmOrder, int ciudad, Integer barrio, String extras, Integer expand) throws Exception {
-        String strSQL = "SELECT DISTINCT * FROM " + ob + ",barrio, extras_anuncio ";
+        String strSQL = "SELECT DISTINCT a.* FROM anuncio a, barrio b ";
+        //Si vienen extras añadimos la tabla
+        if (extras != null) {
+            strSQL += ", extras_anuncio e";
+        }
+//        if(barrio != null) {
+//            strSQL += ", barrio b";
+//        }
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<BeanInterface> alBean;
-        strSQL += " WHERE barrio.id_ciudad = " + ciudad + " AND " + ob + ".id_barrio = barrio.id";
+        strSQL+= " WHERE ";
+        strSQL += " b.id_ciudad = " + ciudad + " AND a.id_barrio = b.id";
+        //Si viene barrio añadimos filtro
         if (barrio != null) {
-            strSQL += " AND barrio.id = " + barrio;
+            strSQL += " AND b.id = " + barrio;
         }
+        //Si vienen extras añadimos filtro
         if (extras != null) {
-            strSQL += " AND id_extras IN(" + extras + ") AND anuncio.id = id_anuncio";
+            strSQL += " AND e.id_extras IN(" + extras + ") AND a.id = e.id_anuncio";
         }
         if (iRpp > 0 && iRpp < 100000 && iPage > 0 && iPage < 100000000) {
             strSQL += " LIMIT " + (iPage - 1) * iRpp + ", " + iRpp;
