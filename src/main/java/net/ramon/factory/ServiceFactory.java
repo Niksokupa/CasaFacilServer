@@ -352,8 +352,8 @@ public class ServiceFactory {
                                 case "getcount":
                                     oReplyBean = oFavoritoService.getcount();
                                     break;
-                                case "getpage":
-                                    oReplyBean = oFavoritoService.getpage();
+                                case "getpagespecific":
+                                    oReplyBean = oFavoritoService.getpagespecific();
                                     break;
                                 default:
                                     oReplyBean = new ReplyBean(500, "Operation doesn't exist");
