@@ -45,10 +45,10 @@ public class FavoritoDao extends GenericDaoImplementation implements DaoInterfac
         }
         return oBean;
     }
-    
-        public ArrayList<BeanInterface> getpagespecific(int iRpp, int iPage, HashMap<String, String> hmOrder, Integer id, Integer expand) throws Exception {
+
+    public ArrayList<BeanInterface> getpagespecific(int iRpp, int iPage, HashMap<String, String> hmOrder, Integer id, Integer expand) throws Exception {
         String strSQL = "SELECT a.* FROM anuncio a, favorito f, usuario u WHERE f.id_usuario = " + id;
-        strSQL+= " AND u.id = " + id + " AND a.id = f.id_anuncio";
+        strSQL += " AND u.id = " + id + " AND a.id = f.id_anuncio";
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<BeanInterface> alBean;
         if (iRpp > 0 && iRpp < 100000 && iPage > 0 && iPage < 100000000) {

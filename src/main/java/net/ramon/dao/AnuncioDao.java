@@ -34,7 +34,7 @@ public class AnuncioDao extends GenericDaoImplementation implements DaoInterface
 //        }
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<BeanInterface> alBean;
-        strSQL+= " WHERE ";
+        strSQL += " WHERE ";
         strSQL += " b.id_ciudad = " + ciudad + " AND a.id_barrio = b.id";
         //Si viene barrio añadimos filtro
         if (barrio != null) {
@@ -54,6 +54,40 @@ public class AnuncioDao extends GenericDaoImplementation implements DaoInterface
                 alBean = new ArrayList<BeanInterface>();
                 while (oResultSet.next()) {
                     BeanInterface oBean = BeanFactory.getBean(ob);
+                    oBean.fill(oResultSet, oConnection, expand);
+                    alBean.add(oBean);
+                }
+            } catch (SQLException e) {
+                throw new Exception("Error en Dao getpage de " + ob, e);
+            } finally {
+                if (oResultSet != null) {
+                    oResultSet.close();
+                }
+                if (oPreparedStatement != null) {
+                    oPreparedStatement.close();
+                }
+            }
+        } else {
+            throw new Exception("Error en Dao getpage de " + ob);
+        }
+        return alBean;
+    }
+
+    
+    public ArrayList<BeanInterface> getpagespecific(int iRpp, int iPage, HashMap<String, String> hmOrder, Integer id, Integer expand) throws Exception {
+        String strSQL = "SELECT a.* FROM anuncio a WHERE a.id_usuario = " + id;
+        strSQL += SqlBuilder.buildSqlOrder(hmOrder);
+        ArrayList<BeanInterface> alBean;
+        if (iRpp > 0 && iRpp < 100000 && iPage > 0 && iPage < 100000000) {
+            strSQL += " LIMIT " + (iPage - 1) * iRpp + ", " + iRpp;
+            ResultSet oResultSet = null;
+            PreparedStatement oPreparedStatement = null;
+            try {
+                oPreparedStatement = oConnection.prepareStatement(strSQL);
+                oResultSet = oPreparedStatement.executeQuery();
+                alBean = new ArrayList<BeanInterface>();
+                while (oResultSet.next()) {
+                    BeanInterface oBean = BeanFactory.getBean("anuncio");
                     oBean.fill(oResultSet, oConnection, expand);
                     alBean.add(oBean);
                 }
