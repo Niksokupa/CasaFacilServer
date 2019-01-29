@@ -139,6 +139,9 @@ public class ServiceFactory {
                                 case "getpage":
                                     oReplyBean = oAnuncioService.getpage();
                                     break;
+                                case "addimage":
+                                    oReplyBean = oAnuncioService.addimage();
+                                    break;
                                 default:
                                     oReplyBean = new ReplyBean(500, "Operation doesn't exist");
                                     break;
@@ -383,6 +386,9 @@ public class ServiceFactory {
                                     break;
                                 case "getpagespecific":
                                     oReplyBean = oAnuncioService.getpagespecific();
+                                    break;
+                                case "addimage":
+                                    oReplyBean = oAnuncioService.addimage();
                                     break;
                                 default:
                                     oReplyBean = new ReplyBean(500, "Operation doesn't exist");
