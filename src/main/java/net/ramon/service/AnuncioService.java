@@ -82,7 +82,6 @@ public class AnuncioService extends GenericServiceImplementation implements Serv
                     fotosBean.setId_anuncio(oBeanAnuncio.getId());
                     FotosDao fotosDao = new FotosDao(oConnection, "fotos");
                     fotosBean = (FotosBean) fotosDao.create(fotosBean);
-                    //Falta poner el addImage de FotosService cuando sepa como funciona desde Angular7
                 }
             }
 
