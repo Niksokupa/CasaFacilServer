@@ -45,6 +45,26 @@ public class FavoritoDao extends GenericDaoImplementation implements DaoInterfac
         }
         return oBean;
     }
+    
+    
+    public int removefav(int id_anuncio, int id_usuario) throws Exception {
+        int iRes = 0;
+        String strSQL = "DELETE FROM " + ob + " WHERE id_anuncio=? AND id_usuario=?";
+        PreparedStatement oPreparedStatement = null;
+        try {
+            oPreparedStatement = oConnection.prepareStatement(strSQL);
+            oPreparedStatement.setInt(1, id_anuncio);
+            oPreparedStatement.setInt(2, id_usuario);
+            iRes = oPreparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new Exception("Error en Dao remove de " + ob, e);
+        } finally {
+            if (oPreparedStatement != null) {
+                oPreparedStatement.close();
+            }
+        }
+        return iRes;
+    }
 
     public ArrayList<BeanInterface> getpagespecific(int iRpp, int iPage, HashMap<String, String> hmOrder, Integer id, Integer expand) throws Exception {
         String strSQL = "SELECT a.* FROM anuncio a, favorito f, usuario u WHERE f.id_usuario = " + id;
