@@ -52,12 +52,13 @@ public class AnuncioService extends GenericServiceImplementation implements Serv
             String strJsonExtrasFromClient = oRequest.getParameter("extras");
             //Recojo los nombres de las fotos
             String strJsonFotosFromClient = oRequest.getParameter("fotos");
+            String prueba = "[]";
 
             BeanInterface oBeanAnuncio = BeanFactory.getBeanFromJson(ob, oGson, strJsonAnuncioFromClient);
             DaoInterface oDao = DaoFactory.getDao(oConnection, ob);
             oBeanAnuncio = oDao.create(oBeanAnuncio);
 
-            if (strJsonExtrasFromClient != null) {
+            if (strJsonExtrasFromClient != null && strJsonExtrasFromClient != prueba) {
                 strJsonExtrasFromClient = strJsonExtrasFromClient.replace("[", "");
                 strJsonExtrasFromClient = strJsonExtrasFromClient.replace("]", "");
                 //Aquí tengo un array con todos los extras elegidos para el anuncio.
@@ -70,7 +71,7 @@ public class AnuncioService extends GenericServiceImplementation implements Serv
                     extrasAnuncioBean = (ExtrasAnuncioBean) extrasAnuncioDao.create(extrasAnuncioBean);
                 }
             }
-            if (strJsonFotosFromClient != null) {
+            if (strJsonFotosFromClient != null && strJsonFotosFromClient != "[]") {
                 strJsonFotosFromClient = strJsonFotosFromClient.replace("[", "");
                 strJsonFotosFromClient = strJsonFotosFromClient.replace("\"", "");
                 strJsonFotosFromClient = strJsonFotosFromClient.replace("]", "");
@@ -84,7 +85,6 @@ public class AnuncioService extends GenericServiceImplementation implements Serv
                     fotosBean = (FotosBean) fotosDao.create(fotosBean);
                 }
             }
-
             oConnection.commit();
             oReplyBean = new ReplyBean(200, oGson.toJson(oBeanAnuncio));
         } catch (Exception ex) {
