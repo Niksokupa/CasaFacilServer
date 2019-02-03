@@ -46,4 +46,31 @@ public class ExtrasDao extends GenericDaoImplementation implements DaoInterface 
         }
         return alBean;
     }
+
+    public ArrayList<BeanInterface> getspecific(Integer id) throws Exception {
+        String strSQL = "SELECT * FROM extras_anuncio WHERE id_anuncio=" + id;
+        ArrayList<BeanInterface> alBean;
+        ResultSet oResultSet = null;
+        PreparedStatement oPreparedStatement = null;
+        try {
+            oPreparedStatement = oConnection.prepareStatement(strSQL);
+            oResultSet = oPreparedStatement.executeQuery();
+            alBean = new ArrayList<BeanInterface>();
+            while (oResultSet.next()) {
+                BeanInterface oBean = BeanFactory.getBean("extras_anuncio");
+                oBean.fill(oResultSet, oConnection, 1);
+                alBean.add(oBean);
+            }
+        } catch (SQLException e) {
+            throw new Exception("Error en Dao get de " + ob, e);
+        } finally {
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
+            if (oPreparedStatement != null) {
+                oPreparedStatement.close();
+            }
+        }
+        return alBean;
+    }
 }

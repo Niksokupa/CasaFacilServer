@@ -171,6 +171,9 @@ public class ServiceFactory {
                                 case "getpage":
                                     oReplyBean = oExtrasService.getpage();
                                     break;
+                                case "getspecific":
+                                    oReplyBean = oExtrasService.getspecific();
+                                    break;
                                 default:
                                     oReplyBean = new ReplyBean(500, "Operation doesn't exist");
                                     break;
@@ -400,6 +403,9 @@ public class ServiceFactory {
                             switch (op) {
                                 case "getall":
                                     oReplyBean = oExtrasService.getall();
+                                    break;
+                                case "getspecific":
+                                    oReplyBean = oExtrasService.getspecific();
                                     break;
                                 default:
                                     oReplyBean = new ReplyBean(500, "Operation doesn't exist");

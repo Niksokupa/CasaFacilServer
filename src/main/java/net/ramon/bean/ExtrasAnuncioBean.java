@@ -50,7 +50,10 @@ public class ExtrasAnuncioBean implements BeanInterface {
 
     @Override
     public ExtrasAnuncioBean fill(ResultSet oResultSet, Connection oConnection, Integer expand) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.setId_anuncio(oResultSet.getInt("id_anuncio"));
+        this.setId_extras(oResultSet.getInt("id_extras"));
+        
+        return this;
     }
 
     @Override

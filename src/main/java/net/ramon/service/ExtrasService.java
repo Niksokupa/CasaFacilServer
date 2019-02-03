@@ -23,7 +23,6 @@ public class ExtrasService extends GenericServiceImplementation implements Servi
         ob = oRequest.getParameter("ob");
     }
 
-
     public ReplyBean getall() throws Exception {
         ReplyBean oReplyBean;
         ConnectionInterface oConnectionPool = null;
@@ -33,6 +32,26 @@ public class ExtrasService extends GenericServiceImplementation implements Servi
             oConnection = oConnectionPool.newConnection();
             ExtrasDao oExtrasDao = new ExtrasDao(oConnection, ob);
             ArrayList<BeanInterface> oBean = oExtrasDao.getall(1);
+            Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
+            oReplyBean = new ReplyBean(200, oGson.toJson(oBean));
+        } catch (Exception ex) {
+            throw new Exception("ERROR: Service level: get method: " + ob + " object", ex);
+        } finally {
+            oConnectionPool.disposeConnection();
+        }
+        return oReplyBean;
+    }
+
+    public ReplyBean getspecific() throws Exception {
+        ReplyBean oReplyBean;
+        ConnectionInterface oConnectionPool = null;
+        Connection oConnection;
+        try {
+            Integer id = Integer.parseInt(oRequest.getParameter("id"));
+            oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+            oConnection = oConnectionPool.newConnection();
+            ExtrasDao oExtrasDao = new ExtrasDao(oConnection, ob);
+            ArrayList<BeanInterface> oBean = oExtrasDao.getspecific(id);
             Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
             oReplyBean = new ReplyBean(200, oGson.toJson(oBean));
         } catch (Exception ex) {
