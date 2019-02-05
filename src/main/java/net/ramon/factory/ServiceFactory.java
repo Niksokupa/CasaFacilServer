@@ -200,9 +200,6 @@ public class ServiceFactory {
                                 case "getpage":
                                     oReplyBean = oFotosService.getpage();
                                     break;
-                                case "addimage":
-                                    oReplyBean = oFotosService.addimage();
-                                    break;
                                 default:
                                     oReplyBean = new ReplyBean(500, "Operation doesn't exist");
                                     break;
@@ -392,6 +389,23 @@ public class ServiceFactory {
                                     break;
                                 case "addimage":
                                     oReplyBean = oAnuncioService.addimage();
+                                    break;
+                                default:
+                                    oReplyBean = new ReplyBean(500, "Operation doesn't exist");
+                                    break;
+                            }
+                            break;
+                        case "fotos":
+                            FotosService oFotosService = new FotosService(oRequest);
+                            switch (op) {
+                                case "getall":
+                                    oReplyBean = oFotosService.getall();
+                                    break;
+                                case "removeimage":
+                                    oReplyBean = oFotosService.removeimage();
+                                    break;
+                                case "remove":
+                                    oReplyBean = oFotosService.remove();
                                     break;
                                 default:
                                     oReplyBean = new ReplyBean(500, "Operation doesn't exist");

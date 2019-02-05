@@ -1,11 +1,25 @@
 package net.ramon.service;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import net.ramon.bean.ReplyBean;
+import net.ramon.bean.UsuarioBean;
+import net.ramon.bean.publicBeanInterface.BeanInterface;
+import net.ramon.connection.publicinterface.ConnectionInterface;
+import net.ramon.constant.ConnectionConstants;
+import net.ramon.dao.ExtrasDao;
+import net.ramon.dao.FotosDao;
+import net.ramon.factory.ConnectionFactory;
 import net.ramon.service.genericServiceImplementation.GenericServiceImplementation;
 import net.ramon.service.publicServiceInterface.ServiceInterface;
 import org.apache.commons.fileupload.FileItem;
@@ -19,33 +33,41 @@ public class FotosService extends GenericServiceImplementation implements Servic
         ob = oRequest.getParameter("ob");
     }
 
-    public ReplyBean addimage() throws Exception {
-
-        String name = "";
+    public ReplyBean getall() throws Exception {
         ReplyBean oReplyBean;
-        Gson oGson = new Gson();
+        ConnectionInterface oConnectionPool = null;
+        Connection oConnection;
+        try {
+            Integer id = Integer.parseInt(oRequest.getParameter("id"));
+            oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+            oConnection = oConnectionPool.newConnection();
+            FotosDao oFotosDao = new FotosDao(oConnection, ob);
+            ArrayList<BeanInterface> oBean = oFotosDao.getall(1, id);
+            Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
+            oReplyBean = new ReplyBean(200, oGson.toJson(oBean));
+        } catch (Exception ex) {
+            throw new Exception("ERROR: Service level: get method: " + ob + " object", ex);
+        } finally {
+            oConnectionPool.disposeConnection();
+        }
+        return oReplyBean;
+    }
 
-        HashMap<String, String> hash = new HashMap<>();
+    public ReplyBean removeimage() throws Exception {
 
-        if (ServletFileUpload.isMultipartContent(oRequest)) {
-            try {
-                List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(oRequest);
-                for (FileItem item : multiparts) {
-                    if (!item.isFormField()) {
-                        name = new File(item.getName()).getName();
-                        item.write(new File(".//..//webapps//ROOT//imagenes//" + name));
-                    } else {
-                        hash.put(item.getFieldName(), item.getString());
-                    }
-                }
-                oReplyBean = new ReplyBean(200, oGson.toJson("File upload: " + name));
-            } catch (Exception ex) {
-                oReplyBean = new ReplyBean(500, oGson.toJson("Error while uploading file: " + name));
-            }
-        } else {
-            oReplyBean = new ReplyBean(500, oGson.toJson("Can't read image"));
+        String ruta = oRequest.getParameter("ruta");
+        String prueba = System.getProperty("user.dir");
+        prueba = prueba.substring(0, prueba.length() - 4);
+        Path rutaCompleta = Paths.get(prueba + "/webapps/images/" + ((UsuarioBean) oRequest.getSession().getAttribute("user")).getId() + "/" + ruta);
+        ReplyBean oReplyBean = null;
+        try {
+            Files.delete(rutaCompleta);
+            oReplyBean = new ReplyBean(200, "Imagen borrada con éxito ");
+        } catch (IOException e) {
+            oReplyBean = new ReplyBean(200, e.toString());
         }
 
         return oReplyBean;
     }
+
 }
