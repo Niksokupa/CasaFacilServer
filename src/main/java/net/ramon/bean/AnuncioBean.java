@@ -328,16 +328,16 @@ public class AnuncioBean extends GenericBeanImplementation implements BeanInterf
         if (id_Tipovia == 0) {
             id_Tipovia = obj_Tipovia.getId();
         }
-        
-                //Getting the default zone id
+
+        //Getting the default zone id
         ZoneId defaultZoneId = ZoneId.systemDefault();
 
         //Converting the date to Instant
-        Instant instantCreacion = fechacreacion.toInstant();
+//        Instant instantCreacion = fechacreacion.toInstant();
         Instant instantUpdate = fechaupdate.toInstant();
 
         //Converting the Date to LocalDate
-        LocalDateTime localDateTimeCreacion = instantCreacion.atZone(defaultZoneId).toLocalDateTime();
+//        LocalDateTime localDateTimeCreacion = instantCreacion.atZone(defaultZoneId).toLocalDateTime();
         LocalDateTime localDateTimeUpdate = instantUpdate.atZone(defaultZoneId).toLocalDateTime();
 
         String strPairs = "";
@@ -348,13 +348,13 @@ public class AnuncioBean extends GenericBeanImplementation implements BeanInterf
         strPairs += "metroscasa=" + metroscasa + ",";
         strPairs += "metrosterreno=" + metrosterreno + ",";
         strPairs += "direccion=" + EncodingHelper.quotate(direccion) + ",";
-        strPairs += "fechacreacion=" + EncodingHelper.quotate(localDateTimeCreacion.toString()) + ",";
+//        strPairs += "fechacreacion=" + EncodingHelper.quotate(localDateTimeCreacion.toString()) + ",";
         strPairs += "fechaupdate=" + EncodingHelper.quotate(localDateTimeUpdate.toString()) + ",";
         strPairs += "precio=" + precio + ",";
         strPairs += "descripcion=" + EncodingHelper.quotate(descripcion) + ",";
-        strPairs += "id_usuario=" + id_Usuario;
-        strPairs += "id_tipoinmueble=" + id_Tipoinmueble;
-        strPairs += "id_tipovia=" + id_Tipovia;
+        strPairs += "id_usuario=" + id_Usuario + ",";
+        strPairs += "id_tipoinmueble=" + id_Tipoinmueble + ",";
+        strPairs += "id_tipovia=" + id_Tipovia + ",";
         strPairs += "id_barrio=" + id_Barrio;
         strPairs += " WHERE id=" + id;
         return strPairs;

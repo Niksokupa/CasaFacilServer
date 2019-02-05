@@ -150,6 +150,68 @@ public class AnuncioService extends GenericServiceImplementation implements Serv
         return oReplyBean;
     }
 
+    public ReplyBean update() throws Exception {
+        int iRes = 0;
+        ReplyBean oReplyBean;
+        ConnectionInterface oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+        Connection oConnection = oConnectionPool.newConnection();
+        try {
+            oConnection.setAutoCommit(false);
+            String delimiter = "\\,";
+            //Recojo los datos del anuncio
+            String strJsonAnuncioFromClient = oRequest.getParameter("anuncio");
+            //Recojo los ID de los extras
+            String strJsonExtrasFromClient = oRequest.getParameter("extras");
+            //Recojo los nombres de las fotos
+            String strJsonFotosFromClient = oRequest.getParameter("fotos");
+            Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
+            BeanInterface oBeanAnuncio = BeanFactory.getBeanFromJson(ob, oGson, strJsonAnuncioFromClient);
+            DaoInterface oDao = DaoFactory.getDao(oConnection, ob);
+            iRes = oDao.update(oBeanAnuncio);
+
+            if (strJsonExtrasFromClient != null && !strJsonExtrasFromClient.equals("[]")) {
+                strJsonExtrasFromClient = strJsonExtrasFromClient.replace("[", "");
+                strJsonExtrasFromClient = strJsonExtrasFromClient.replace("]", "");
+                //Aquí tengo un array con todos los extras elegidos para el anuncio.
+                String extrasArray[] = strJsonExtrasFromClient.split(delimiter);
+                ExtrasAnuncioDao extrasAnuncioDao = new ExtrasAnuncioDao(oConnection, "extras_anuncio");
+                iRes = extrasAnuncioDao.remove(oBeanAnuncio.getId());
+                for (int i = 0; i < extrasArray.length; i++) {
+                    ExtrasAnuncioBean extrasAnuncioBean = new ExtrasAnuncioBean();
+                    extrasAnuncioBean.setId_anuncio(oBeanAnuncio.getId());
+                    extrasAnuncioBean.setId_extras(Integer.parseInt(extrasArray[i]));
+                    iRes = extrasAnuncioDao.remove(oBeanAnuncio.getId());
+                    extrasAnuncioBean = (ExtrasAnuncioBean) extrasAnuncioDao.create(extrasAnuncioBean);
+                }
+            } else {
+                ExtrasAnuncioDao extrasAnuncioDao = new ExtrasAnuncioDao(oConnection, "extras_anuncio");
+                iRes = extrasAnuncioDao.remove(oBeanAnuncio.getId());
+            }
+            if (strJsonFotosFromClient != null && !strJsonFotosFromClient.equals("[]")) {
+                strJsonFotosFromClient = strJsonFotosFromClient.replace("[", "");
+                strJsonFotosFromClient = strJsonFotosFromClient.replace("\"", "");
+                strJsonFotosFromClient = strJsonFotosFromClient.replace("]", "");
+                //Aquí tengo un array con todos los nombres elegidos para cada foto.
+                String fotosArray[] = strJsonFotosFromClient.split(delimiter);
+                for (int i = 0; i < fotosArray.length; i++) {
+                    FotosBean fotosBean = new FotosBean();
+                    fotosBean.setRuta(fotosArray[i]);
+                    fotosBean.setId_anuncio(oBeanAnuncio.getId());
+                    FotosDao fotosDao = new FotosDao(oConnection, "fotos");
+                    fotosBean = (FotosBean) fotosDao.create(fotosBean);
+                }
+            }
+
+            oConnection.commit();
+            oReplyBean = new ReplyBean(200, Integer.toString(iRes));
+        } catch (Exception ex) {
+            throw new Exception("ERROR: Service level: update method: " + ob + " object", ex);
+        } finally {
+            oConnectionPool.disposeConnection();
+        }
+        return oReplyBean;
+    }
+
     public ReplyBean addimage() throws Exception {
 
         String name = "";

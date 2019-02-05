@@ -46,4 +46,23 @@ public class ExtrasAnuncioDao extends GenericDaoImplementation implements DaoInt
         }
         return oBean;
     }
+
+    @Override
+    public int remove(int id) throws Exception {
+        int iRes = 0;
+        String strSQL = "DELETE FROM " + ob + " WHERE id_anuncio=?";
+        PreparedStatement oPreparedStatement = null;
+        try {
+            oPreparedStatement = oConnection.prepareStatement(strSQL);
+            oPreparedStatement.setInt(1, id);
+            iRes = oPreparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new Exception("Error en Dao remove de " + ob, e);
+        } finally {
+            if (oPreparedStatement != null) {
+                oPreparedStatement.close();
+            }
+        }
+        return iRes;
+    }
 }
