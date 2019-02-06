@@ -447,6 +447,17 @@ public class ServiceFactory {
                     break;
                 case 0:
                     switch (ob) {
+                        case "fotos":
+                            FotosService oFotosService = new FotosService(oRequest);
+                            switch (op) {
+                                case "getall":
+                                    oReplyBean = oFotosService.getall();
+                                    break;
+                                default:
+                                    oReplyBean = new ReplyBean(500, "Operation doesn't exist");
+                                    break;
+                            }
+                            break;
                         case "usuario":
                             UsuarioService oUsuarioService = new UsuarioService(oRequest);
                             switch (op) {
@@ -477,6 +488,9 @@ public class ServiceFactory {
                             switch (op) {
                                 case "getall":
                                     oReplyBean = oExtrasService.getall();
+                                    break;
+                                case "getspecific":
+                                    oReplyBean = oExtrasService.getspecific();
                                     break;
                                 default:
                                     oReplyBean = new ReplyBean(500, "Operation doesn't exist");
