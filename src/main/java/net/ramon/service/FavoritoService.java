@@ -12,9 +12,7 @@ import net.ramon.bean.publicBeanInterface.BeanInterface;
 import net.ramon.connection.publicinterface.ConnectionInterface;
 import net.ramon.constant.ConnectionConstants;
 import net.ramon.dao.FavoritoDao;
-import net.ramon.dao.publicDaoInterface.DaoInterface;
 import net.ramon.factory.ConnectionFactory;
-import net.ramon.factory.DaoFactory;
 import net.ramon.helper.ParameterCook;
 import net.ramon.service.genericServiceImplementation.GenericServiceImplementation;
 import net.ramon.service.publicServiceInterface.ServiceInterface;
@@ -41,6 +39,26 @@ public class FavoritoService extends GenericServiceImplementation implements Ser
             ArrayList<BeanInterface> alBean = oFavoritoDao.getpagespecific(iRpp, iPage, hmOrder, id, 1);
             Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
             oReplyBean = new ReplyBean(200, oGson.toJson(alBean));
+        } catch (Exception ex) {
+            throw new Exception("ERROR: Service level: get page: " + ob + " object", ex);
+        } finally {
+            oConnectionPool.disposeConnection();
+        }
+        return oReplyBean;
+    }
+    
+    public ReplyBean getcountspecific() throws Exception {
+        ReplyBean oReplyBean;
+        ConnectionInterface oConnectionPool = null;
+        Connection oConnection;
+        try {
+            Integer id = ((UsuarioBean) oRequest.getSession().getAttribute("user")).getId();
+            oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+            oConnection = oConnectionPool.newConnection();
+            FavoritoDao oFavoritoDao = new FavoritoDao(oConnection, "favorito");
+            Integer count = oFavoritoDao.getcountspecific(id);
+            Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
+            oReplyBean = new ReplyBean(200, oGson.toJson(count));
         } catch (Exception ex) {
             throw new Exception("ERROR: Service level: get page: " + ob + " object", ex);
         } finally {

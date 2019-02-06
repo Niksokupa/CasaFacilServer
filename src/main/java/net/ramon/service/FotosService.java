@@ -2,29 +2,22 @@ package net.ramon.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import net.ramon.bean.ReplyBean;
 import net.ramon.bean.UsuarioBean;
 import net.ramon.bean.publicBeanInterface.BeanInterface;
 import net.ramon.connection.publicinterface.ConnectionInterface;
 import net.ramon.constant.ConnectionConstants;
-import net.ramon.dao.ExtrasDao;
 import net.ramon.dao.FotosDao;
 import net.ramon.factory.ConnectionFactory;
 import net.ramon.service.genericServiceImplementation.GenericServiceImplementation;
 import net.ramon.service.publicServiceInterface.ServiceInterface;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 public class FotosService extends GenericServiceImplementation implements ServiceInterface {
 
@@ -56,9 +49,9 @@ public class FotosService extends GenericServiceImplementation implements Servic
     public ReplyBean removeimage() throws Exception {
 
         String ruta = oRequest.getParameter("ruta");
-        String prueba = System.getProperty("user.dir");
-        prueba = prueba.substring(0, prueba.length() - 4);
-        Path rutaCompleta = Paths.get(prueba + "/webapps/images/" + ((UsuarioBean) oRequest.getSession().getAttribute("user")).getId() + "/" + ruta);
+        String dir = System.getProperty("user.dir");
+        dir = dir.substring(0, dir.length() - 4);
+        Path rutaCompleta = Paths.get(dir + "/webapps/images/" + ((UsuarioBean) oRequest.getSession().getAttribute("user")).getId() + "/" + ruta);
         ReplyBean oReplyBean = null;
         try {
             Files.delete(rutaCompleta);

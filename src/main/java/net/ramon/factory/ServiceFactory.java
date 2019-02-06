@@ -355,6 +355,9 @@ public class ServiceFactory {
                                 case "getcount":
                                     oReplyBean = oFavoritoService.getcount();
                                     break;
+                                case "getcountspecific":
+                                    oReplyBean = oFavoritoService.getcountspecific();
+                                    break;
                                 case "getpagespecific":
                                     oReplyBean = oFavoritoService.getpagespecific();
                                     break;
