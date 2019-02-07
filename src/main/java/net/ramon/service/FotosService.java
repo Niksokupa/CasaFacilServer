@@ -51,7 +51,7 @@ public class FotosService extends GenericServiceImplementation implements Servic
         String ruta = oRequest.getParameter("ruta");
         String dir = System.getProperty("user.dir");
         dir = dir.substring(0, dir.length() - 4);
-        Path rutaCompleta = Paths.get(dir + "/webapps/ROOT/imagenes/" + ((UsuarioBean) oRequest.getSession().getAttribute("user")).getId() + "/" + ruta);
+        Path rutaCompleta = Paths.get(dir + "/webapps/imagenes/" + ((UsuarioBean) oRequest.getSession().getAttribute("user")).getId() + "/" + ruta);
         ReplyBean oReplyBean = null;
         try {
             Files.delete(rutaCompleta);

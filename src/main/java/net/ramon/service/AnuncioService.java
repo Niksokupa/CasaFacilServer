@@ -227,8 +227,8 @@ public class AnuncioService extends GenericServiceImplementation implements Serv
                     if (!item.isFormField()) {
                         name = new File(item.getName()).getName();
                         //Creo la carpeta con la ID de usuario
-                        (new File(".//..//webapps//ROOT//imagenes//" + ((UsuarioBean) oRequest.getSession().getAttribute("user")).getId())).mkdirs();
-                        item.write(new File(".//..//webapps//ROOT//imagenes//" + ((UsuarioBean) oRequest.getSession().getAttribute("user")).getId() + "//" + name));
+                        (new File(".//..//webapps//imagenes//" + ((UsuarioBean) oRequest.getSession().getAttribute("user")).getId())).mkdirs();
+                        item.write(new File(".//..//webapps//imagenes//" + ((UsuarioBean) oRequest.getSession().getAttribute("user")).getId() + "//" + name));
                     } else {
                         hash.put(item.getFieldName(), item.getString());
                     }
