@@ -231,7 +231,6 @@ public class AnuncioBean extends GenericBeanImplementation implements BeanInterf
         this.setFechaupdate(oResultSet.getDate("fechaupdate"));
         FotosDao oFotosDao = new FotosDao(oConnection, "fotos");
         this.setNumFotos(oFotosDao.getcountspecific(this.getId()));
-//        this.setNumFotos(3);
         if (expand > 0) {
             DaoInterface oUsuarioDao = DaoFactory.getDao(oConnection, "usuario");
             this.setObj_Usuario((UsuarioBean) oUsuarioDao.get(oResultSet.getInt("id_usuario"), expand));

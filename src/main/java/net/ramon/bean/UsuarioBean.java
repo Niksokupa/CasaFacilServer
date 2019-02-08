@@ -129,6 +129,7 @@ public class UsuarioBean extends GenericBeanImplementation implements BeanInterf
         this.setApe1(oResultSet.getString("apellido1"));
         this.setApe2(oResultSet.getString("apellido2"));
         this.setCorreo(oResultSet.getString("correo"));
+        this.setTelefono(oResultSet.getInt("telefono"));
         this.setPass(oResultSet.getString("password"));
 //        AnuncioDao oAnuncioDao = new AnuncioDao(oConnection, "anuncio");
 //        this.setNumAnuncios(oAnuncioDao.getcountspecific(this.getId()));
