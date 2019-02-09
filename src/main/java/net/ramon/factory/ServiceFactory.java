@@ -249,6 +249,9 @@ public class ServiceFactory {
                                 case "get":
                                     oReplyBean = oCiudadService.get();
                                     break;
+                                case "getall":
+                                    oReplyBean = oCiudadService.getall();
+                                    break;
                                 case "create":
                                     oReplyBean = oCiudadService.create();
                                     break;
@@ -305,6 +308,17 @@ public class ServiceFactory {
                     break;
                 case 2:
                     switch (ob) {
+                        case "ciudad":
+                            CiudadService oCiudadService = new CiudadService(oRequest);
+                            switch (op) {
+                                case "getall":
+                                    oReplyBean = oCiudadService.getall();
+                                    break;
+                                default:
+                                    oReplyBean = new ReplyBean(500, "Operation doesn't exist");
+                                    break;
+                            }
+                            break;
                         case "usuario":
                             UsuarioService oUsuarioService = new UsuarioService(oRequest);
                             switch (op) {
@@ -447,6 +461,17 @@ public class ServiceFactory {
                     break;
                 case 0:
                     switch (ob) {
+                        case "ciudad":
+                            CiudadService oCiudadService = new CiudadService(oRequest);
+                            switch (op) {
+                                case "getall":
+                                    oReplyBean = oCiudadService.getall();
+                                    break;
+                                default:
+                                    oReplyBean = new ReplyBean(500, "Operation doesn't exist");
+                                    break;
+                            }
+                            break;
                         case "fotos":
                             FotosService oFotosService = new FotosService(oRequest);
                             switch (op) {
