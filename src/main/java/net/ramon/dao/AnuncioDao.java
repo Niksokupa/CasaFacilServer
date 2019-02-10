@@ -32,7 +32,7 @@ public class AnuncioDao extends GenericDaoImplementation implements DaoInterface
 //        if(barrio != null) {
 //            strSQL += ", barrio b";
 //        }
-        strSQL += SqlBuilder.buildSqlOrder(hmOrder);
+
         ArrayList<BeanInterface> alBean;
         strSQL += " WHERE ";
         strSQL += " b.id_ciudad = " + ciudad + " AND a.id_barrio = b.id";
@@ -44,6 +44,8 @@ public class AnuncioDao extends GenericDaoImplementation implements DaoInterface
         if (extras != null) {
             strSQL += " AND e.id_extras IN(" + extras + ") AND a.id = e.id_anuncio";
         }
+
+        strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         if (iRpp > 0 && iRpp < 100000 && iPage > 0 && iPage < 100000000) {
             strSQL += " LIMIT " + (iPage - 1) * iRpp + ", " + iRpp;
             ResultSet oResultSet = null;
@@ -73,7 +75,6 @@ public class AnuncioDao extends GenericDaoImplementation implements DaoInterface
         return alBean;
     }
 
-    
     public ArrayList<BeanInterface> getpagespecific(int iRpp, int iPage, HashMap<String, String> hmOrder, Integer id, Integer expand) throws Exception {
         String strSQL = "SELECT a.* FROM anuncio a WHERE a.id_usuario = " + id;
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
