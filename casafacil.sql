@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 28-01-2019 a las 04:35:45
+-- Tiempo de generación: 10-02-2019 a las 16:13:09
 -- Versión del servidor: 5.7.23
 -- Versión de PHP: 7.1.22
 
@@ -54,7 +54,10 @@ INSERT INTO `anuncio` (`id`, `titulo`, `habitaciones`, `banyos`, `metroscasa`, `
 (2, 'Increible piso en el Cabanyal', 3, 1, 110, NULL, 'reina 84', '2019-01-02 00:00:00', '2019-01-02 00:00:00', 150000, 'Piso en Valencia zona CABAÑAL, 131 m. de superficie, 30 m2 de salon, una habitación doble y 2 habitaciones sencillas, 2 baños, propiedad reformada, cocina equipada, carpinteria interior de madera, orientación suroeste, suelo de laminado, carpintería exterior de climalit.\r\nExtras: agua, armarios empotrados, ascensor, gas ciudad , luminoso, luz, patio, supermercados, t.v., trastero, videoportero, zona bien comunicada, zona comercial, zona de ocio, zona peatonal.\r\ncerca a esta propiedad tienes, autobuses, céntrico, centros comerciales, centros médicos, colegios, hospitales, parques, supermercados, zona de paso, zonas infantiles\r\nGastos de comunidad: 125 Eur. (€/trimestre)\r\n', 1, 1, 1, 1),
 (3, 'anuncio13', 2, 2, 90, NULL, 'reina 84', '2019-01-02 00:00:00', '2019-01-02 00:00:00', 70, 'noseloco', 1, 1, 1, 1),
 (4, 'castellon', 2, 2, 90, NULL, 'reina 84', '2019-01-02 00:00:00', '2019-01-02 00:00:00', 70, 'noseloco', 1, 1, 1, 2),
-(5, 'castellon2', 2, 2, 90, NULL, 'reina 84', '2019-01-02 00:00:00', '2019-01-02 00:00:00', 70, 'noseloco', 3, 1, 1, 2);
+(14, 'titulo1', 2, 2, 121, 343, 'nombrevia', '2019-02-03 00:00:00', '2019-02-05 00:00:00', 2323232, 'asdasdasd', 3, 3, 2, 2),
+(15, 'frfrfr', 2, 2, 121, NULL, 'sdasdasd', '2019-02-03 00:00:00', '2019-02-03 00:00:00', 222221, 'frfhthyjuef', 3, 4, 2, 1),
+(16, 'yuyuyuy', 5, 3, 433, NULL, 'sfsdfsdf', '2019-02-03 00:00:00', '2019-02-03 00:00:00', 567664, 'sadasdasd', 3, 1, 4, 3),
+(17, 'yjtyjtyj', 4, 4, 222, NULL, 'fgjyjyj', '2019-02-03 00:00:00', '2019-02-03 00:00:00', 666666, 'asdasdasd', 3, 1, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -135,13 +138,14 @@ CREATE TABLE `extras_anuncio` (
 --
 
 INSERT INTO `extras_anuncio` (`id_anuncio`, `id_extras`) VALUES
+(17, 1),
 (2, 2),
 (3, 2),
 (4, 2),
-(5, 2),
+(14, 2),
+(17, 2),
 (3, 3),
 (4, 3),
-(5, 3),
 (2, 4);
 
 -- --------------------------------------------------------
@@ -160,7 +164,6 @@ CREATE TABLE `favorito` (
 --
 
 INSERT INTO `favorito` (`id_usuario`, `id_anuncio`) VALUES
-(3, 2),
 (3, 3);
 
 -- --------------------------------------------------------
@@ -186,8 +189,7 @@ INSERT INTO `fotos` (`id`, `ruta`, `id_anuncio`) VALUES
 (4, 'asd22.png', 3),
 (5, 'asd81.png', 4),
 (6, 'asd22.png', 4),
-(7, 'asd81.png', 5),
-(8, 'asd22.png', 5);
+(8, 'Selección_009.png', 14);
 
 -- --------------------------------------------------------
 
@@ -274,7 +276,7 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`id`, `nickname`, `nombre`, `apellido1`, `apellido2`, `correo`, `telefono`, `password`, `id_tipousuario`) VALUES
 (1, 'admin', 'nombre', 'ape1', 'ape2', 'correo@correo.es', 657465213, 'admin', 1),
-(2, 'adminsha', 'adminsha', 'adminsha', 'adminsha', 'adminsha@adminsha.com', 67564536, '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 1),
+(2, 'adminsha', 'adminsha', 'adminsha', 'adminsha', 'adminsha@adminsha.com', 675645436, '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 1),
 (3, 'clientesha', 'cliente', 'cliente', 'cliente', 'cliente@cliente.es', 647653423, 'a60b85d409a01d46023f90741e01b79543a3cb1ba048eaefbe5d7a63638043bf', 2);
 
 --
@@ -366,7 +368,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `anuncio`
 --
 ALTER TABLE `anuncio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `barrio`
@@ -427,7 +429,7 @@ ALTER TABLE `anuncio`
   ADD CONSTRAINT `fk_anuncio_barrio1` FOREIGN KEY (`id_barrio`) REFERENCES `barrio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_anuncio_tipoinmueble1` FOREIGN KEY (`id_tipoinmueble`) REFERENCES `tipoinmueble` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_anuncio_tipovia1` FOREIGN KEY (`id_tipovia`) REFERENCES `tipovia` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_anuncio_usuario1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_anuncio_usuario1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `barrio`
@@ -439,7 +441,7 @@ ALTER TABLE `barrio`
 -- Filtros para la tabla `extras_anuncio`
 --
 ALTER TABLE `extras_anuncio`
-  ADD CONSTRAINT `fk_Anuncio_has_Extras_Anuncio` FOREIGN KEY (`id_anuncio`) REFERENCES `anuncio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Anuncio_has_Extras_Anuncio` FOREIGN KEY (`id_anuncio`) REFERENCES `anuncio` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Anuncio_has_Extras_Extras1` FOREIGN KEY (`id_extras`) REFERENCES `extras` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
@@ -453,7 +455,7 @@ ALTER TABLE `favorito`
 -- Filtros para la tabla `fotos`
 --
 ALTER TABLE `fotos`
-  ADD CONSTRAINT `fk_fotos_anuncio1` FOREIGN KEY (`id_anuncio`) REFERENCES `anuncio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_fotos_anuncio1` FOREIGN KEY (`id_anuncio`) REFERENCES `anuncio` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `usuario`
