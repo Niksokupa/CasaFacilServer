@@ -45,6 +45,25 @@ public class FotosService extends GenericServiceImplementation implements Servic
         }
         return oReplyBean;
     }
+    
+    public ReplyBean geteverything() throws Exception {
+        ReplyBean oReplyBean;
+        ConnectionInterface oConnectionPool = null;
+        Connection oConnection;
+        try {
+            oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+            oConnection = oConnectionPool.newConnection();
+            FotosDao oFotosDao = new FotosDao(oConnection, ob);
+            ArrayList<BeanInterface> oBean = oFotosDao.geteverything(1);
+            Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
+            oReplyBean = new ReplyBean(200, oGson.toJson(oBean));
+        } catch (Exception ex) {
+            throw new Exception("ERROR: Service level: get method: " + ob + " object", ex);
+        } finally {
+            oConnectionPool.disposeConnection();
+        }
+        return oReplyBean;
+    }
 
     public ReplyBean removeimage() throws Exception {
 

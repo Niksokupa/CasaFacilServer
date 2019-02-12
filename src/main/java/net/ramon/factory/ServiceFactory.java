@@ -185,6 +185,12 @@ public class ServiceFactory {
                                 case "get":
                                     oReplyBean = oFotosService.get();
                                     break;
+                                case "getall":
+                                    oReplyBean = oFotosService.getall();
+                                    break;
+                                case "geteverything":
+                                    oReplyBean = oFotosService.geteverything();
+                                    break;
                                 case "create":
                                     oReplyBean = oFotosService.create();
                                     break;
@@ -418,6 +424,9 @@ public class ServiceFactory {
                                 case "getall":
                                     oReplyBean = oFotosService.getall();
                                     break;
+                                case "geteverything":
+                                    oReplyBean = oFotosService.geteverything();
+                                    break;
                                 case "removeimage":
                                     oReplyBean = oFotosService.removeimage();
                                     break;
@@ -477,6 +486,9 @@ public class ServiceFactory {
                             switch (op) {
                                 case "getall":
                                     oReplyBean = oFotosService.getall();
+                                    break;
+                                case "geteverything":
+                                    oReplyBean = oFotosService.geteverything();
                                     break;
                                 default:
                                     oReplyBean = new ReplyBean(500, "Operation doesn't exist");
