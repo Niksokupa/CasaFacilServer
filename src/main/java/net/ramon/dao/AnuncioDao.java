@@ -10,7 +10,6 @@ import net.ramon.bean.publicBeanInterface.BeanInterface;
 import net.ramon.dao.genericDaoImplementation.GenericDaoImplementation;
 import net.ramon.dao.publicDaoInterface.DaoInterface;
 import net.ramon.factory.BeanFactory;
-import net.ramon.helper.EncodingHelper;
 import net.ramon.helper.SqlBuilder;
 
 /**
@@ -29,9 +28,6 @@ public class AnuncioDao extends GenericDaoImplementation implements DaoInterface
         if (extras != null) {
             strSQL += ", extras_anuncio e";
         }
-//        if(barrio != null) {
-//            strSQL += ", barrio b";
-//        }
 
         ArrayList<BeanInterface> alBean;
         strSQL += " WHERE ";
@@ -73,6 +69,45 @@ public class AnuncioDao extends GenericDaoImplementation implements DaoInterface
             throw new Exception("Error en Dao getpage de " + ob);
         }
         return alBean;
+    }
+
+    public int getcountfiltered(HashMap<String, String> hmOrder, int ciudad, Integer barrio, String extras) throws Exception {
+        String strSQL = "SELECT COUNT(a.id) FROM anuncio a, barrio b";
+        int res = 0;
+        if (extras != null) {
+            strSQL += ", extras_anuncio e";
+        }
+
+        strSQL += " WHERE ";
+        strSQL += " b.id_ciudad = " + ciudad + " AND a.id_barrio = b.id";
+        //Si viene barrio añadimos filtro
+        if (barrio != null) {
+            strSQL += " AND b.id = " + barrio;
+        }
+        //Si vienen extras añadimos filtro
+        if (extras != null) {
+            strSQL += " AND e.id_extras IN(" + extras + ") AND a.id = e.id_anuncio";
+        }
+
+        ResultSet oResultSet = null;
+        PreparedStatement oPreparedStatement = null;
+        try {
+            oPreparedStatement = oConnection.prepareStatement(strSQL);
+            oResultSet = oPreparedStatement.executeQuery();
+            if (oResultSet.next()) {
+                res = oResultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new Exception("Error en Dao get de " + ob, e);
+        } finally {
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
+            if (oPreparedStatement != null) {
+                oPreparedStatement.close();
+            }
+        }
+        return res;
     }
 
     public ArrayList<BeanInterface> getpagespecific(int iRpp, int iPage, HashMap<String, String> hmOrder, Integer id, Integer expand) throws Exception {

@@ -136,6 +136,9 @@ public class ServiceFactory {
                                 case "getcount":
                                     oReplyBean = oAnuncioService.getcount();
                                     break;
+                                case "getcountfiltered":
+                                    oReplyBean = oAnuncioService.getcountfiltered();
+                                    break;
                                 case "getpage":
                                     oReplyBean = oAnuncioService.getpage();
                                     break;
@@ -404,6 +407,9 @@ public class ServiceFactory {
                                 case "getcount":
                                     oReplyBean = oAnuncioService.getcount();
                                     break;
+                                case "getcountfiltered":
+                                    oReplyBean = oAnuncioService.getcountfiltered();
+                                    break;
                                 case "getpage":
                                     oReplyBean = oAnuncioService.getpage();
                                     break;
@@ -545,6 +551,9 @@ public class ServiceFactory {
                                     break;
                                 case "getcount":
                                     oReplyBean = oAnuncioService.getcount();
+                                    break;
+                                case "getcountfiltered":
+                                    oReplyBean = oAnuncioService.getcountfiltered();
                                     break;
                                 case "getpage":
                                     oReplyBean = oAnuncioService.getpage();

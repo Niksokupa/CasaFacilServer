@@ -126,6 +126,38 @@ public class AnuncioService extends GenericServiceImplementation implements Serv
         }
         return oReplyBean;
     }
+    
+    public ReplyBean getcountfiltered() throws Exception {
+        ReplyBean oReplyBean;
+        ConnectionInterface oConnectionPool = null;
+        Connection oConnection;
+        try {
+            Integer iRpp = Integer.parseInt(oRequest.getParameter("rpp"));
+            Integer iPage = Integer.parseInt(oRequest.getParameter("page"));
+            Integer ciudad = Integer.parseInt(oRequest.getParameter("ciudad"));
+            Integer barrio = null;
+            String extras = null;
+            String prueba = oRequest.getParameter("barrio");
+            if (oRequest.getParameter("barrio") != null && !prueba.equals("undefined")) {
+                barrio = Integer.parseInt(oRequest.getParameter("barrio"));
+            }
+            if (oRequest.getParameter("extras") != null && !"undefined".equals(oRequest.getParameter("extras")) && !"".equals(oRequest.getParameter("extras"))) {
+                extras = oRequest.getParameter("extras");
+            }
+            HashMap<String, String> hmOrder = ParameterCook.getOrderParams(oRequest.getParameter("order"));
+            oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+            oConnection = oConnectionPool.newConnection();
+            AnuncioDao anuncioDao = new AnuncioDao(oConnection, "anuncio");
+            int registros = anuncioDao.getcountfiltered(hmOrder, ciudad, barrio, extras);
+            Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
+            oReplyBean = new ReplyBean(200, oGson.toJson(registros));
+        } catch (Exception ex) {
+            throw new Exception("ERROR: Service level: get page: " + ob + " object", ex);
+        } finally {
+            oConnectionPool.disposeConnection();
+        }
+        return oReplyBean;
+    }
 
     public ReplyBean getpagespecific() throws Exception {
         ReplyBean oReplyBean;
