@@ -212,7 +212,6 @@ public class AnuncioService extends GenericServiceImplementation implements Serv
                     ExtrasAnuncioBean extrasAnuncioBean = new ExtrasAnuncioBean();
                     extrasAnuncioBean.setId_anuncio(oBeanAnuncio.getId());
                     extrasAnuncioBean.setId_extras(Integer.parseInt(extrasArray[i]));
-                    iRes = extrasAnuncioDao.remove(oBeanAnuncio.getId());
                     extrasAnuncioBean = (ExtrasAnuncioBean) extrasAnuncioDao.create(extrasAnuncioBean);
                 }
             } else {
